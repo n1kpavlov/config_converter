@@ -64,13 +64,103 @@ cd MIREA_config_converter
 py config_converter.py <имя_файла.xml>
 ```
 5. Ввод конфигурации в командную строку. Для завершения ввода использовать ctrl + Z
-# Пример работы программы
-### Граф зависимостей пакета Newtonsoft.Json с глубиной анализа 1
-![output](https://github.com/user-attachments/assets/850ad660-7dff-4d92-8c07-d9e0f679bf24)
-### Граф зависимостей пакета Newtonsoft.Json с глубиной анализа 2
-![output](https://github.com/user-attachments/assets/95259622-ce49-4ac6-a56a-eefd2742abe4)
-### Граф зависимостей пакета Newtonsoft.Json с неограниченной глубиной анализа
-![output](https://github.com/user-attachments/assets/c7949dff-abc3-4d79-ab11-d1b0fb17034f)
+# Примерs работы программы
+### Настройка базы данных
+**Входные данные:**
+```
+*> Configuring the database
+def max_conn = 100
+def timeout = 30
+database struct {
+    database = struct {
+        host = 19216801;
+        port = 5432;
+        max_connections = [max_conn];
+        connection_timeout = [timeout]
+    }
+}
+```
+**Выходные данные (XML):**
+```
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+	<database type="dict">
+		<host type="int">19216801</host>
+		<port type="int">5432</port>
+		<max_connections type="int">100</max_connections>
+		<connection_timeout type="int">30</connection_timeout>
+	</database>
+</database>
+```
+### Конфигурация веб-приложения
+**Входные данные:**
+```
+*> Web Application Configuration
+def max_threads = 8
+web_config struct {
+    webserver = struct {
+        hostname = 127001;
+        port = 8080;
+        threads = [max_threads];
+        routes = struct {
+            home = 1;
+            login = 2;
+            logout = 3
+        }
+    }
+}
+```
+**Выходные данные (XML):**
+```
+<?xml version="1.0" encoding="utf-8"?>
+<web_config>
+	<webserver type="dict">
+		<hostname type="int">127001</hostname>
+		<port type="int">8080</port>
+		<threads type="int">8</threads>
+		<routes type="dict">
+			<home type="int">1</home>
+			<login type="int">2</login>
+			<logout type="int">3</logout>
+		</routes>
+	</webserver>
+</web_config>
+```
+### Конфигурация системы мониторинга
+**Входные данные:**
+```
+*> Configuration of the monitoring system
+def interval = 15
+def retention = 365
+monitoring_config struct {
+    monitoring = struct {
+        interval = [interval];
+        retention_days = [retention];
+        services = struct {
+            first = 1;
+            second = 2;
+            third = 3;
+            fourth = 4
+        }
+    }
+}
+```
+**Выходные данные (XML):**
+```
+<?xml version="1.0" encoding="utf-8"?>
+<monitoring_config>
+	<monitoring type="dict">
+		<interval type="int">15</interval>
+		<retention_days type="int">365</retention_days>
+		<services type="dict">
+			<first type="int">1</first>
+			<second type="int">2</second>
+			<third type="int">3</third>
+			<fourth type="int">4</fourth>
+		</services>
+	</monitoring>
+</monitoring_config>
+```
 # Результаты тестирования
 ### Тест функции получения зависимостей с глубиной анализа меньше 1
 ```
