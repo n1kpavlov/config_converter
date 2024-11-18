@@ -115,7 +115,7 @@ def pretty_print_xml(xml_string):
     dom = xml.dom.minidom.parseString(pretty_xml)
 
     # Возвращаем красиво отформатированный текст
-    return f'<?xml version="1.0" encoding="utf-8"?>\n' + dom.toprettyxml(indent="  ", newl="\n")[23:]
+    return f'<?xml version="1.0" encoding="utf-8"?>\n' + dom.toprettyxml(newl="\n")[23:]
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
