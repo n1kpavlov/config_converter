@@ -49,6 +49,32 @@ class ConfigTransformer(Transformer):
             raise ValueError(f"В конфигурации использована неизвестная константа по имени {name}")
         return self.constants[name]
 
+    def config(self, value):
+        name, info = value
+        info = info[1]
+        return f"<{name}>{info}</{name}>"
+
+    def pair(self, value):
+        key, tupl = value
+        typ, val = tupl
+        return f"<{key} type=\"{typ}\">{val}</{key}>"
+
+    def dict(self, items):
+        result = ""
+        for item in items:
+            if item is not None:
+                result += item
+        return "dict", result
+
+    def NUMBER(self, token):
+        return "int", int(token)
+
+    def NAME(self, token):
+        return str(token)
+
+    def value(self, tupl):
+        return tupl[0]
+
 def parse_config(input_text):
     try:
         tree = config_parser.parse(input_text)
