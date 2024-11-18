@@ -6,7 +6,7 @@ from lark import Lark, Transformer, exceptions, LarkError
 grammar = """
 start: (const_decl | comment)* config
 
-comment: "*>" /[а-яА-Яa-zA-Z][ _а-яА-Яa-zA-Z0-9]*/
+comment: "*>" /[a-zA-Z][ _a-zA-Z0-9]*/
 
 config: NAME value
 
