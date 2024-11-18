@@ -32,7 +32,15 @@ class ConfigTransformer(Transformer):
         self.constants = {}
 
 def parse_config(input_text):
-    
+    try:
+        tree = config_parser.parse(input_text)
+        transformer = ConfigTransformer()
+        xml_output = transformer.transform(tree)
+        return xml_output
+    except exceptions.UnexpectedCharacters as uc:
+        return f"Unexpected Characters:\n{str(uc)}"
+    except exceptions.LarkError as le:
+        return f"Ошибка при обработке:\n{str(le)}"
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
