@@ -26,9 +26,19 @@ NAME: /[a-zA-Z][_a-zA-Z0-9]*/
 
 config_parser = Lark(grammar)
 
+class ConfigTransformer(Transformer):
+    def __init__(self):
+        super().__init__()
+        self.constants = {}
+
+def parse_config(input_text):
+    
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Использование: python config_converter.py <выходной_файл.xml>")
         sys.exit(1)
     output_filename = sys.argv[1]
     input_text = sys.stdin.read()
+    xml_str = parse_config(input_text)
+    print(xml_str)
