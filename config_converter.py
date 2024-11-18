@@ -30,6 +30,24 @@ class ConfigTransformer(Transformer):
     def __init__(self):
         super().__init__()
         self.constants = {}
+    
+    def start(self, value):
+        return value[-1]
+
+    def comment(self, _):
+        return None
+
+    def const_decl(self, tupl):
+        name, value = tupl
+        if name in self.constants:
+            raise LarkError(f"Константа {name} уже объявлена")
+        self.constants[name] = value
+
+    def const_eval(self, value):
+        name = value[0]
+        if name not in self.constants:
+            raise ValueError(f"В конфигурации использована неизвестная константа по имени {name}")
+        return self.constants[name]
 
 def parse_config(input_text):
     try:
