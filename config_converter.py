@@ -86,6 +86,13 @@ def parse_config(input_text):
     except exceptions.LarkError as le:
         return f"Ошибка при обработке:\n{str(le)}"
 
+def pretty_print_xml(xml_string):
+    root = ET.fromstring(xml_string)
+    pretty_xml = ET.tostring(root, encoding='UTF-8', method='xml')
+    import xml.dom.minidom
+    dom = xml.dom.minidom.parseString(pretty_xml)
+    return f'<?xml version="1.0" encoding="utf-8"?>\n' + dom.toprettyxml(indent="  ", newl="\n")[23:]
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Использование: python config_converter.py <выходной_файл.xml>")
@@ -93,4 +100,6 @@ if __name__ == "__main__":
     output_filename = sys.argv[1]
     input_text = sys.stdin.read()
     xml_str = parse_config(input_text)
-    print(xml_str)
+    output = pretty_print_xml(xml_str)
+    with open(output_filename, 'w', encoding='utf-8') as f:
+        f.write(output)
