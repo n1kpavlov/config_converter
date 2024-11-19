@@ -1,0 +1,11 @@
+*> Configuring the database
+def max_conn = 100
+def timeout = 30
+database struct {
+    database = struct {
+        host = 19216801;
+        port = 5432;
+        max_connections = [max_conn];
+        connection_timeout = [timeout]
+    }
+}

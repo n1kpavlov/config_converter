@@ -1,0 +1,14 @@
+*> Web Application Configuration
+def max_threads = 8
+web_config struct {
+    webserver = struct {
+        hostname = 127001;
+        port = 8080;
+        threads = [max_threads];
+        routes = struct {
+            home = 1;
+            login = 2;
+            logout = 3
+        }
+    }
+}
