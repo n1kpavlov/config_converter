@@ -12,7 +12,7 @@ class TestParseConfig(unittest.TestCase):
     def test_dict(self):
         input_text = ('config struct {\n'
                       '\tnames = struct {\n'
-                      '\t\tnikita = 1;\n'
+                      '\t\tnikita = 1,\n'
                       '\t\tartem = 2\n'
                       '\t}\n'
                       '}\n')
@@ -65,7 +65,7 @@ class TestPrettyPrintXML(unittest.TestCase):
                       'def int = 10\n'
                       'main struct {\n'
                       '\tcombo = struct {\n'
-                      '\t\tnumber = 19216801;\n'
+                      '\t\tnumber = 19216801,\n'
                       '\tmax_connections = [int]\n'
                       '\t}\n'
                       '}\n')
