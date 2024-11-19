@@ -37,7 +37,7 @@ class ConfigTransformer(Transformer):
     def start(self, value):
         return value[-1]
 
-    # Обработка комментария (новая функция)
+    # Обработка комментария
     def comment(self, _):
         return None  # Комментарии игнорируются
 
