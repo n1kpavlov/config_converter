@@ -162,36 +162,95 @@ monitoring_config struct {
 </monitoring_config>
 ```
 # Результаты тестирования
-### Тест
+### Тест простой конфигурации
 ```
-
+def test_simple_config(self):
+	input_text = ('config struct {\n'
+                      '\tsmth = 13\n'
+                      '}\n')
+        expected_output = '<config><smth type="int">13</smth></config>'
+        self.assertEqual(parse_config(input_text), expected_output)
 ```
-### Тест
+### Тест словаря
 ```
-
+def test_dict(self):
+	input_text = ('config struct {\n'
+                      '\tnames = struct {\n'
+                      '\t\tnikita = 1;\n'
+                      '\t\tartem = 2\n'
+                      '\t}\n'
+                      '}\n')
+        expected_output = '<config><names type="dict"><nikita type="int">1</nikita><artem type="int">2</artem></names></config>'
+        self.assertEqual(parse_config(input_text), expected_output)
 ```
-### Тест
+### Тест константы
 ```
-
+def test_constant(self):
+        input_text = ('def x = 5\n'
+                      'config struct {\n'
+                      '\tsmth = [x]\n'
+                      '}\n')
+        expected_output = '<config><smth type="int">5</smth></config>'
+        self.assertEqual(parse_config(input_text), expected_output)
 ```
-### Тест
+### Тест комментария
 ```
-
+def test_comment(self):
+        input_text = ('*> comment\n'
+                      'config struct {\n'
+                      '\tsmth = 10\n'
+                      '}\n')
+        expected_output = '<config><smth type="int">10</smth></config>'
+        self.assertEqual(parse_config(input_text), expected_output)
 ```
-### Тест
+### Тест синтаксической ошибки
 ```
-
+def test_syntax_error(self):
+        input_text = ('def x = 5\n'
+                      'config struct {\n'
+                      '\tsmth = x\n'
+                      '}\n')
+        result = parse_config(input_text)
+        assert "Unexpected Characters" in result
 ```
-### Тест
+### Тест использования необъявленной константы
 ```
-
+def test_undefined_constant_error(self):
+        input_text = ('config struct {\n'
+                      '\tsmth = [undefined_constant]\n'
+                      '}\n')
+        result = parse_config(input_text)
+        assert "В конфигурации использована неизвестная константа по имени undefined_constant" in result
 ```
-### Тест
+### Тест повторного объявления константы
 ```
-
+def test_duplicate_constant_error(self):
+        input_text = ('def x = 5\n'
+                      'def x = 10\n'
+                      'config struct {\n'
+                      '\tsmth = [x]\n'
+                      '}\n')
+        result = parse_config(input_text)
+        assert "Константа x уже объявлена" in result
 ```
-### Тест
+### Тест форматированного вывода
 ```
-
+def test_output_xml(self):
+        input_text = ('*> Test comment\n'
+                      'def int = 10\n'
+                      'main struct {\n'
+                      '\tcombo = struct {\n'
+                      '\t\tnumber = 19216801;\n'
+                      '\tmax_connections = [int]\n'
+                      '\t}\n'
+                      '}\n')
+        expected_output = ('<?xml version="1.0" encoding="utf-8"?>\n'
+                        '<main>\n'
+                        '\t<combo type="dict">\n'
+                        '\t\t<number type="int">19216801</number>\n'
+                        '\t\t<max_connections type="int">10</max_connections>\n'
+                        '\t</combo>\n'
+                        '</main>\n')
+        self.assertEqual(pretty_print_xml(parse_config(input_text)), expected_output)
 ```
 ![image](https://github.com/user-attachments/assets/4f180366-0af7-44be-81a5-15770bd454dc)
