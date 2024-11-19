@@ -71,7 +71,7 @@ py config_converter.py <имя_файла.xml>
 *> Configuring the database
 def max_conn = 100
 def timeout = 30
-database struct {
+database {
     database = struct {
         host = 19216801,
         port = 5432,
@@ -97,7 +97,7 @@ database struct {
 ```
 *> Web Application Configuration
 def max_threads = 8
-web_config struct {
+web_config {
     webserver = struct {
         hostname = 127001,
         port = 8080,
@@ -132,7 +132,7 @@ web_config struct {
 *> Configuration of the monitoring system
 def interval = 15
 def retention = 365
-monitoring_config struct {
+monitoring_config {
     monitoring = struct {
         interval = [interval],
         retention_days = [retention],
@@ -165,7 +165,7 @@ monitoring_config struct {
 ### Тест простой конфигурации
 ```
 def test_simple_config(self):
-	input_text = ('config struct {\n'
+	input_text = ('config {\n'
                       '\tsmth = 13\n'
                       '}\n')
         expected_output = '<config><smth type="int">13</smth></config>'
@@ -174,7 +174,7 @@ def test_simple_config(self):
 ### Тест словаря
 ```
 def test_dict(self):
-	input_text = ('config struct {\n'
+	input_text = ('config {\n'
                       '\tnames = struct {\n'
                       '\t\tnikita = 1,\n'
                       '\t\tartem = 2\n'
@@ -187,7 +187,7 @@ def test_dict(self):
 ```
 def test_constant(self):
         input_text = ('def x = 5\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = [x]\n'
                       '}\n')
         expected_output = '<config><smth type="int">5</smth></config>'
@@ -197,7 +197,7 @@ def test_constant(self):
 ```
 def test_comment(self):
         input_text = ('*> comment\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = 10\n'
                       '}\n')
         expected_output = '<config><smth type="int">10</smth></config>'
@@ -207,7 +207,7 @@ def test_comment(self):
 ```
 def test_syntax_error(self):
         input_text = ('def x = 5\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = x\n'
                       '}\n')
         result = parse_config(input_text)
@@ -216,7 +216,7 @@ def test_syntax_error(self):
 ### Тест использования необъявленной константы
 ```
 def test_undefined_constant_error(self):
-        input_text = ('config struct {\n'
+        input_text = ('config {\n'
                       '\tsmth = [undefined_constant]\n'
                       '}\n')
         result = parse_config(input_text)
@@ -227,7 +227,7 @@ def test_undefined_constant_error(self):
 def test_duplicate_constant_error(self):
         input_text = ('def x = 5\n'
                       'def x = 10\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = [x]\n'
                       '}\n')
         result = parse_config(input_text)
@@ -238,7 +238,7 @@ def test_duplicate_constant_error(self):
 def test_output_xml(self):
         input_text = ('*> Test comment\n'
                       'def int = 10\n'
-                      'main struct {\n'
+                      'main {\n'
                       '\tcombo = struct {\n'
                       '\t\tnumber = 19216801,\n'
                       '\tmax_connections = [int]\n'
