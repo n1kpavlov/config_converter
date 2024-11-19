@@ -6,7 +6,7 @@ from lark import Lark, Transformer, exceptions, LarkError
 grammar = """
 start: (const_decl | comment)* config
 
-comment: "*>" /[a-zA-Z][ _a-zA-Z0-9]*/
+comment: "*>" /.+/
 
 config: NAME value
 
@@ -15,7 +15,7 @@ const_eval: "[" NAME "]"
 
 value:  NUMBER | dict | const_eval
 
-dict: "struct {" [pair (";" pair)*] "}"
+dict: "struct {" [pair ("," pair)*] "}"
 pair: NAME "=" value
 
 NAME: /[a-zA-Z][_a-zA-Z0-9]*/
