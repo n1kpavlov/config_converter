@@ -73,9 +73,9 @@ def max_conn = 100
 def timeout = 30
 database struct {
     database = struct {
-        host = 19216801;
-        port = 5432;
-        max_connections = [max_conn];
+        host = 19216801,
+        port = 5432,
+        max_connections = [max_conn],
         connection_timeout = [timeout]
     }
 }
@@ -99,12 +99,12 @@ database struct {
 def max_threads = 8
 web_config struct {
     webserver = struct {
-        hostname = 127001;
-        port = 8080;
-        threads = [max_threads];
+        hostname = 127001,
+        port = 8080,
+        threads = [max_threads],
         routes = struct {
-            home = 1;
-            login = 2;
+            home = 1,
+            login = 2,
             logout = 3
         }
     }
@@ -134,12 +134,12 @@ def interval = 15
 def retention = 365
 monitoring_config struct {
     monitoring = struct {
-        interval = [interval];
-        retention_days = [retention];
+        interval = [interval],
+        retention_days = [retention],
         services = struct {
-            first = 1;
-            second = 2;
-            third = 3;
+            first = 1,
+            second = 2,
+            third = 3,
             fourth = 4
         }
     }
@@ -176,7 +176,7 @@ def test_simple_config(self):
 def test_dict(self):
 	input_text = ('config struct {\n'
                       '\tnames = struct {\n'
-                      '\t\tnikita = 1;\n'
+                      '\t\tnikita = 1,\n'
                       '\t\tartem = 2\n'
                       '\t}\n'
                       '}\n')
@@ -240,7 +240,7 @@ def test_output_xml(self):
                       'def int = 10\n'
                       'main struct {\n'
                       '\tcombo = struct {\n'
-                      '\t\tnumber = 19216801;\n'
+                      '\t\tnumber = 19216801,\n'
                       '\tmax_connections = [int]\n'
                       '\t}\n'
                       '}\n')
