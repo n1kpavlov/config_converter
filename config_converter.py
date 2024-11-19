@@ -8,7 +8,8 @@ start: (const_decl | COMMENT)* config
 
 COMMENT: "*>" /.+/
 
-config: NAME value
+config: NAME conf
+conf: "{" [pair ("," pair)*] "}"
 
 const_decl: "def" NAME "=" value
 const_eval: "[" NAME "]"
@@ -55,7 +56,7 @@ class ConfigTransformer(Transformer):
     # Обработка корневого узла
     def config(self, value):
         name, info = value
-        info = info[1]
+        info = info.children[0]
         return f"<{name}>{info}</{name}>"
 
     # Обработка пары ключ-значение в словаре
