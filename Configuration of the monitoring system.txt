@@ -1,14 +1,14 @@
 *> Configuration of the monitoring system
 def interval = 15
 def retention = 365
-monitoring_config struct {
+monitoring_config {
     monitoring = struct {
-        interval = [interval];
-        retention_days = [retention];
+        interval = [interval],
+        retention_days = [retention],
         services = struct {
-            first = 1;
-            second = 2;
-            third = 3;
+            first = 1,
+            second = 2,
+            third = 3,
             fourth = 4
         }
     }
