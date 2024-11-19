@@ -3,14 +3,14 @@ from config_converter import parse_config, pretty_print_xml
 
 class TestParseConfig(unittest.TestCase):
     def test_simple_config(self):
-        input_text = ('config struct {\n'
+        input_text = ('config {\n'
                       '\tsmth = 13\n'
                       '}\n')
         expected_output = '<config><smth type="int">13</smth></config>'
         self.assertEqual(parse_config(input_text), expected_output)
 
     def test_dict(self):
-        input_text = ('config struct {\n'
+        input_text = ('config {\n'
                       '\tnames = struct {\n'
                       '\t\tnikita = 1,\n'
                       '\t\tartem = 2\n'
@@ -21,7 +21,7 @@ class TestParseConfig(unittest.TestCase):
 
     def test_constant(self):
         input_text = ('def x = 5\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = [x]\n'
                       '}\n')
         expected_output = '<config><smth type="int">5</smth></config>'
@@ -29,7 +29,7 @@ class TestParseConfig(unittest.TestCase):
 
     def test_comment(self):
         input_text = ('*> comment\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = 10\n'
                       '}\n')
         expected_output = '<config><smth type="int">10</smth></config>'
@@ -37,14 +37,14 @@ class TestParseConfig(unittest.TestCase):
 
     def test_syntax_error(self):
         input_text = ('def x = 5\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = x\n'
                       '}\n')
         result = parse_config(input_text)
         assert "Unexpected Characters" in result
 
     def test_undefined_constant_error(self):
-        input_text = ('config struct {\n'
+        input_text = ('config {\n'
                       '\tsmth = [undefined_constant]\n'
                       '}\n')
         result = parse_config(input_text)
@@ -53,7 +53,7 @@ class TestParseConfig(unittest.TestCase):
     def test_duplicate_constant_error(self):
         input_text = ('def x = 5\n'
                       'def x = 10\n'
-                      'config struct {\n'
+                      'config {\n'
                       '\tsmth = [x]\n'
                       '}\n')
         result = parse_config(input_text)
@@ -63,7 +63,7 @@ class TestPrettyPrintXML(unittest.TestCase):
     def test_output_xml(self):
         input_text = ('*> Test comment\n'
                       'def int = 10\n'
-                      'main struct {\n'
+                      'main {\n'
                       '\tcombo = struct {\n'
                       '\t\tnumber = 19216801,\n'
                       '\tmax_connections = [int]\n'
