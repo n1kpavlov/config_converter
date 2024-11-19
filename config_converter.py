@@ -4,9 +4,9 @@ from lark import Lark, Transformer, exceptions, LarkError
 
 # Грамматика конфигурационного языка
 grammar = """
-start: (const_decl | comment)* config
+start: (const_decl | COMMENT)* config
 
-comment: "*>" /.+/
+COMMENT: "*>" /.+/
 
 config: NAME value
 
@@ -23,6 +23,7 @@ NAME: /[a-zA-Z][_a-zA-Z0-9]*/
 %import common.NUMBER
 %import common.WS
 %ignore WS
+%ignore COMMENT
 """
 
 # Инициализация Lark парсера
@@ -36,10 +37,6 @@ class ConfigTransformer(Transformer):
     # Обработка точки старта
     def start(self, value):
         return value[-1]
-
-    # Обработка комментария
-    def comment(self, _):
-        return None  # Комментарии игнорируются
 
     # Обработка записи константы
     def const_decl(self, tupl):
