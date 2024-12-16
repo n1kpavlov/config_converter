@@ -49,11 +49,11 @@ def имя = значение
 # Сборка и запуск проекта
 1. Загрузить репозиторий на компьютер
 ```
-git clone https://github.com/n1kpavlov/MIREA_config_converter
+git clone https://github.com/n1kpavlov/config_converter
 ```
 2. Прейдите в директорию репозитория
 ```
-cd MIREA_config_converter
+cd config_converter
 ```
 3. Запустите скрипт-установщик библиотек script.sh
 ```
