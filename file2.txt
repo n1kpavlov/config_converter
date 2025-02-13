@@ -1,1 +1,1 @@
-New file2
+Changed file2
